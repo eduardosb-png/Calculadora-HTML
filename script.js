@@ -79,4 +79,49 @@ function percent() {
     currentOperand = (parseFloat(currentOperand) / 100).toString();
 }
 
-document.querySelectorAll()
+document.querySelectorAll('[data-number]').forEach(button => {
+    button.addEventListener('click', () => {
+        appendNumber(button.dataset.number);
+        updateDisplay();
+    });
+});
+
+document.querySelectorAll('[data-operator]').forEach(button => {
+    button.addEventListener('click', () => {
+        chooseOperation(button.dataset.operator);
+        updateDisplay();
+    });
+});
+
+document.querySelector('[data-action="equals"]').addEventListener('click', () => {
+    compute();
+    updateDisplay();
+});
+
+document.querySelector('[data-action="clear"]').addEventListener('click', () => {
+    clearAll();
+    updateDisplay();
+});
+
+document.querySelector('[data-action="delete"]').addEventListener('click', () => {
+    deleteLast();
+    updateDisplay();
+});
+
+document.querySelector('[data-action="percent"]').addEventListener('click', () => {
+    percent();
+    updateDisplay();
+});
+
+window.addEventListener('keydown', (e) => {
+    if(e.key >= '0' && e.key <= '9'){ appendNumber(e.key); updateDisplay();}
+    if(e.key === '.') {appendNumber('.'); updateDisplay();}
+    if(e.key === '+'){ chooseOperation('+'); updateDisplay();}
+    if(e.key === '-'){ chooseOperation('-'); updateDisplay();}
+    if(e.key === '*'){ chooseOperation('x'); updateDisplay();}
+    if(e.key === '/'){ e.preventDefault(); chooseOperation('÷'); updateDisplay();}
+    if(e.key === 'Enter' || e.key === '='){ compute(); updateDisplay();}
+    if(e.key === 'Backspace'){ deleteLast(); updateDisplay();}
+    if(e.key === 'Escape'){ clearAll(); updateDisplay();}  
+    if(e.key === '%'){ percent(); updateDisplay();}
+});
